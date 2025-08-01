@@ -30,35 +30,86 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ให้โครงสร้างแอปพื้นฐาน
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: const Text('Chapter 4'),
         backgroundColor: Colors.blue, // ปรับแต่งสี AppBar
       ),
-      body: Center(
-        // พื้นที่เนื้อหาหลัก
-        child: Container(
-          width: 300.0,
-          height: 150.0,
-          decoration: BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Center(
-            child: Image.asset(
-              'assets/images/cat.jpg', // URL รูปภาพตัวอย่าง
-              width: 100,
-              height: 50,
-              fit: BoxFit.cover,
+      body: Padding(
+        // เพิ่ม Padding รอบ Column
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          // ใช้ Column สำหรับเลย์เอาต์แนวตั้ง
+          //crossAxisAlignment:
+          // CrossAxisAlignment.center, // จัดกึ่งกลางไอเท็มแนวนอน
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.network(
+              'https://picsum.photos/seed/flutter/400/200',
+              height: 100.0,
+              fit: BoxFit.fitHeight,
             ),
-          ),
+            const SizedBox(height: 16.0),
+            Image.asset(
+              'asstes/images/cat.jpg', // ใช้พาธ asset จริงของคุณ
+              height: 100,
+              errorBuilder: (context, error, stackTrace) {
+                // แนวปฏิบัติที่ดีแม้สำหรับ assets, เผื่อกรณีพาธผิด
+                return const Text(
+                  'เกิดข้อผิดพลาดในการโหลด asset',
+                  style: TextStyle(color: Colors.red),
+                );
+              },
+            ),
+            const SizedBox(height: 16.0),
+            Container(
+              width: 300.0,
+              height: 50.0,
+              decoration: BoxDecoration(
+                color: Colors.brown,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Text(
+                "สวัสดี Flutter!",
+              ),
+            ),
+            Row(
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // จัดกึ่งกลางปุ่มในแถว
+              children: <Widget>[
+                ElevatedButton(
+                  onPressed: () {
+                    print('กดปุ่ม Elevated');
+                  },
+                  child: const Text('Elevated'),
+                ),
+                const SizedBox(width: 10), // เว้นวรรคระหว่างปุ่ม
+                OutlinedButton(
+                  onPressed: () {
+                    print('กดปุ่ม Outlined');
+                  },
+                  child: const Icon(Icons.person),
+                ),
+                const SizedBox(width: 10), // เว้นวรรคระหว่างปุ่ม
+                TextButton(
+                  onPressed: () {
+                    print('กดปุ่ม Text');
+                  },
+                  child: const Text('Text'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16), // ตัวเว้นวรรค
+            IconButton(
+              onPressed: () {
+                print('กดไอคอน Info');
+              },
+              icon: const Icon(Icons.info_outline),
+              iconSize: 50,
+              tooltip: 'ข้อมูล', // ข้อความช่วยเหลือ
+              color: Colors.blueGrey,
+            ),
+          ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print('FAB Pressed!');
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }
